@@ -1,0 +1,7 @@
+# 授業資料（著作物のため非公開）
+*.pdf
+contents.md
+
+# OS
+.DS_Store
+Thumbs.db

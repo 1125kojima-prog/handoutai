@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>半導体物理 学習アプリ</title>
+<link rel="stylesheet" href="lib/katex/katex.min.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">半導体物理 学習アプリ</div>
+  <nav class="tabs" id="main-tabs">
+    <button class="tab-btn active" data-view="glossary">用語辞典</button>
+    <button class="tab-btn" data-view="crystal3d">結晶3Dビューワー</button>
+    <button class="tab-btn" data-view="qmsim">量子力学シミュレーション</button>
+    <button class="tab-btn" data-view="quiz">理解確認クイズ</button>
+  </nav>
+</header>
+
+<main id="app-root">
+
+  <!-- 用語辞典 -->
+  <section id="view-glossary" class="view active">
+    <div class="panel-toolbar">
+      <input type="text" id="glossary-search" placeholder="用語を検索（例：ミラー指数、トンネル効果）">
+      <div class="chip-group" id="glossary-filter">
+        <button class="chip active" data-filter="all">すべて</button>
+        <button class="chip" data-filter="crystal">結晶 (kessyou.pdf)</button>
+        <button class="chip" data-filter="quantum">量子力学 (ryousi.pdf)</button>
+        <button class="chip" data-filter="mondai">問題集のみ (mondai.pdf)</button>
+      </div>
+    </div>
+    <div id="glossary-count" class="muted"></div>
+    <div id="glossary-list" class="card-grid"></div>
+  </section>
+
+  <!-- 結晶3Dビューワー -->
+  <section id="view-crystal3d" class="view">
+    <div class="split">
+      <div class="split-side">
+        <h2>結晶構造を選択</h2>
+        <select id="crystal-select"></select>
+        <div id="crystal-info" class="info-box"></div>
+
+        <h2>ミラー指数で結晶面を表示</h2>
+        <div class="miller-input">
+          <label>h <input type="number" id="miller-h" value="1" step="1"></label>
+          <label>k <input type="number" id="miller-k" value="0" step="1"></label>
+          <label>l <input type="number" id="miller-l" value="0" step="1"></label>
+          <button id="miller-show">面を表示</button>
+          <button id="miller-clear">消去</button>
+        </div>
+        <div id="miller-presets" class="chip-group"></div>
+
+        <div id="dislocation-controls" style="display:none">
+          <h2>転位の位置</h2>
+          <div class="slider-row"><label>すべりの境界位置 <span id="disloc-x-val">0.0</span></label><input type="range" id="disloc-x" min="-4" max="4" step="0.1" value="0"></div>
+          <p class="muted small">スライダーを動かすと、転位（すべりの境界）が結晶中を移動する様子を再現します。</p>
+        </div>
+
+        <p class="muted small">ヒント：ドラッグで回転、スクロール/ピンチで拡大縮小できます。</p>
+      </div>
+      <div class="split-main">
+        <div id="crystal-canvas-wrap"><canvas id="crystal-canvas"></canvas></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 量子力学シミュレーション -->
+  <section id="view-qmsim" class="view">
+    <div class="chip-group" id="qmsim-tabs">
+      <button class="chip active" data-sim="infinite-well">無限に深い井戸型ポテンシャル</button>
+      <button class="chip" data-sim="finite-well">有限の井戸型ポテンシャル（トンネル的浸透）</button>
+      <button class="chip" data-sim="bohr">ボーアの原子モデル</button>
+      <button class="chip" data-sim="uncertainty">不確定性原理</button>
+      <button class="chip" data-sim="debroglie">物質波（波束）</button>
+    </div>
+    <div id="qmsim-body"></div>
+  </section>
+
+  <!-- クイズ -->
+  <section id="view-quiz" class="view">
+    <div class="panel-toolbar">
+      <div class="chip-group" id="quiz-filter">
+        <button class="chip active" data-cat="all">すべて</button>
+        <button class="chip" data-cat="crystal">結晶 1〜6</button>
+        <button class="chip" data-cat="quantum">量子力学 1〜5</button>
+      </div>
+      <button id="quiz-restart" class="btn-secondary">最初から</button>
+    </div>
+    <div id="quiz-progress" class="muted"></div>
+    <div id="quiz-body"></div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <span>出典: kessyou.pdf（結晶）/ ryousi.pdf（量子力学）/ mondai.pdf（問題集）</span>
+</footer>
+
+<script src="lib/katex/katex.min.js"></script>
+<script src="lib/three.min.js"></script>
+<script src="lib/OrbitControls.js"></script>
+
+<script src="js/data/terms.js"></script>
+<script src="js/data/crystals.js"></script>
+<script src="js/data/quiz.js"></script>
+
+<script src="js/glossary.js"></script>
+<script src="js/crystal3d.js"></script>
+<script src="js/qmsim.js"></script>
+<script src="js/quiz.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
